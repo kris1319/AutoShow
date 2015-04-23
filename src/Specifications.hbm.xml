@@ -4,15 +4,15 @@
 		
 <hibernate-mapping>	
 	<class name="logic.Specifications" table="Specifications">
-		<id column="car_id" name="car_id" type="java.lang.Long">
+		<id column="car_id" name="carId" type="java.lang.Long">
 			<generator class="foreign">
 				<param name="property">car</param>
 			</generator>
 		</id>
 		
-		<property column="automatic_transmission" name="auto_transmission" type="java.lang.Boolean"/>
-		<property column="engine_power" name="engine_power" type="java.lang.Integer"/>
-		<property column="fuel_consumption" name="fuel_consumption" type="java.lang.Double"/>
+		<property column="automatic_transmission" name="autoTransmission" type="java.lang.Boolean"/>
+		<property column="engine_power" name="enginePower" type="java.lang.Integer"/>
+		<property column="fuel_consumption" name="fuelConsumption" type="java.lang.Double"/>
 		
 		<one-to-one name="car" class="logic.Car" cascade="all"/>
 	</class>

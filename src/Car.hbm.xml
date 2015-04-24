@@ -9,17 +9,5 @@
 		</id>
 		<property column="cost" name="cost" type="java.math.BigDecimal"/>
 		<property column="model" name="model" type="java.lang.String"/>
-		
-		<one-to-one name="specifications" class="logic.Specifications" cascade="all"/>
-		
-		<set name="clientsOrders" table="Orders" lazy="false">
-			<key column="car_id"/>
-			<many-to-many column="client_id" class="logic.Client"/>
-		</set>
-		
-		<set name="clientsTestDrives" table="TestDrive" lazy="false">
-			<key column="car_id"/>
-			<many-to-many column="client_id" class="logic.Client"/>
-		</set>
 	</class>
 </hibernate-mapping>

@@ -12,15 +12,5 @@
 		<property column="address" name="address" type="java.lang.String"/>
 		<property column="email" name="email" type="java.lang.String"/>
 		<property column="phone_number" name="phone" type="java.lang.String"/>
-		
-		<set name="carsOrders" table="Orders" lazy="false">
-			<key column="client_id"/>
-			<many-to-many column="car_id" class="logic.Car"/>
-		</set>
-		
-		<set name="carsTestDrives" table="TestDrive" lazy="false">
-			<key column="client_id"/>
-			<many-to-many column="car_id" class="logic.Car"/>
-		</set>
 	</class>
 </hibernate-mapping>

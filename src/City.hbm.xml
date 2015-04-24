@@ -8,10 +8,5 @@
 			<generator class="increment"/>
 		</id>
 		<property column="city" name="city" type="java.lang.String"/>
-		
-		<set name="clients" lazy="true">
-			<key column="location"/>
-			<one-to-many class="logic.Client"/>
-		</set>
 	</class>
 </hibernate-mapping>

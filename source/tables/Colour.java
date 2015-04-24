@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Colour {
 	private Integer id;
 	private String colour;
-	private Set cars = new HashSet();
+	private Set<Car> cars = new HashSet<Car>(0);
 	
 	public Colour() {}
 	

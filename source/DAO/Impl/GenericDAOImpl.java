@@ -1,5 +1,6 @@
 package DAO.Impl;
 
+import org.hibernate.HibernateException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -70,13 +71,18 @@ public class GenericDAOImpl <T> implements GenericDAO <T> {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
+			System.out.print(type.getName());
 			result =  (Collection<T>) session.createCriteria(type).list();
 			session.getTransaction().commit();
-			return result;
-		} finally {
+		} catch (HibernateException ex) {
+			System.out.print(ex);
+			System.out.print(ex.getMessage());
+		}finally {
 			if (session != null && session.isOpen())
 				session.close();
 		}
+		
+		return result;
 	}
 }
 	

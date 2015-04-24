@@ -14,6 +14,6 @@
 		<property column="engine_power" name="enginePower" type="java.lang.Integer"/>
 		<property column="fuel_consumption" name="fuelConsumption" type="java.lang.Double"/>
 		
-		<one-to-one name="car" class="logic.Car" cascade="all"/>
+		<one-to-one name="carId" class="logic.Car" cascade="all"/>
 	</class>
 </hibernate-mapping>

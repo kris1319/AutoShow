@@ -3,18 +3,19 @@ package logic;
 import java.text.SimpleDateFormat;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Date;
 
 public class Order {
 	private Long number;
 	private Long car_id;
 	private Long client_id;
-	private SimpleDateFormat date;
+	private Date date;
 	private Boolean testdrive;
 	private Integer status;
 	
 	public Order() {}
 	
-	public Order(Long n, Long ca, Long cl, SimpleDateFormat d, Boolean t, Integer s) {
+	public Order(Long n, Long ca, Long cl, Date d, Boolean t, Integer s) {
 		this.number = n;
 		this.car_id = ca;
 		this.client_id = cl;
@@ -47,19 +48,19 @@ public class Order {
 		return client_id;
 	}
 	
-	public void setDate(SimpleDateFormat new_date) {
+	public void setDate(Date new_date) {
 		this.date = new_date;
 	}
 	
-	public SimpleDateFormat getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setTestDrive(Boolean td) {
+	public void setTestdrive(Boolean td) {
 		this.testdrive = td;
 	}
 	
-	public Boolean getTestDrive() {
+	public Boolean getTestdrive() {
 		return testdrive;
 	}
 	

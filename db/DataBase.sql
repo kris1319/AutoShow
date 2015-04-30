@@ -1,10 +1,10 @@
 USE AutoShow;
 
 CREATE TABLE Colour
-	(	colour_id int AUTO_INCREMENT,
+	(	id int AUTO_INCREMENT,
 		colour varchar(20) NOT NULL,
 
-		CONSTRAINT `PK_Colour` PRIMARY KEY (colour_id ASC)
+		CONSTRAINT `PK_Colour` PRIMARY KEY (id ASC)
 	);
 
 CREATE TABLE Material
@@ -78,7 +78,7 @@ CREATE TABLE Cars
 	
 		CONSTRAINT `PK_Cars` PRIMARY KEY (registration_number ASC),
 		CONSTRAINT FOREIGN KEY `FK_Cars_Label` (label_id) REFERENCES Label (label_id),
-		CONSTRAINT FOREIGN KEY `FK_Cars_Colour` (colour_id) REFERENCES Colour (colour_id),
+		CONSTRAINT FOREIGN KEY `FK_Cars_Colour` (colour_id) REFERENCES Colour (id),
 		CONSTRAINT FOREIGN KEY `FK_Cars_Material` (upholstery_id) REFERENCES Material (material_id)
 	);
 

@@ -25,7 +25,8 @@ public class CityDAOImpl extends GenericDAOImpl<City> implements CityDAO {
 			session = HibernateUtil.getSessionFactory().openSession();
 			city = (City)session.load(City.class, id);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCityById'", JOptionPane.OK_OPTION);
+			//System.out.print(e);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCityById'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -62,7 +63,7 @@ public class CityDAOImpl extends GenericDAOImpl<City> implements CityDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from City c where c.country_id = :cid").setInteger("cid", cid);
+			Query q = session.createQuery("from City where country_id = :cid").setInteger("cid", cid);
 			cities = (List<City>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {

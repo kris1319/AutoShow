@@ -27,7 +27,8 @@ public class ColourDAOImpl extends GenericDAOImpl<Colour> implements ColourDAO {
 			session = HibernateUtil.getSessionFactory().openSession();
 			col = (Colour)session.load(Colour.class, id);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getColourById'", JOptionPane.OK_OPTION);
+			//System.out.print(e);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getColourById'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -43,7 +44,7 @@ public class ColourDAOImpl extends GenericDAOImpl<Colour> implements ColourDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Colour c where c.colour = :str").setString("str", c);
+			Query q = session.createQuery("from Colour where colour = :str").setString("str", c);
 			col = (Colour)q.uniqueResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -64,7 +65,7 @@ public class ColourDAOImpl extends GenericDAOImpl<Colour> implements ColourDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Colour c where c.id = :col").setInteger("col", cid);
+			Query q = session.createQuery("from Colour where id = :col").setInteger("col", cid);
 			col = (Colour)q.uniqueResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {

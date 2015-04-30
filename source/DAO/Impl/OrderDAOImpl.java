@@ -39,7 +39,7 @@ public class OrderDAOImpl extends GenericDAOImpl<Order> implements OrderDAO {
 			session = HibernateUtil.getSessionFactory().openSession();
 			ord = (Order)session.load(Order.class, num);
 		}  catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getOrderByNumber'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getOrderByNumber'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -56,11 +56,11 @@ public class OrderDAOImpl extends GenericDAOImpl<Order> implements OrderDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Order ord where ord.car_id = :car").setLong("car", num);
+			Query q = session.createQuery("from Order where car_id = :car").setLong("car", num);
 			ords = (List<Order>)q.list();
 			session.getTransaction().commit();
 		}  catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getOrderByCar'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getOrderByCar'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -77,11 +77,11 @@ public class OrderDAOImpl extends GenericDAOImpl<Order> implements OrderDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Order ord where ord.client_id = :client").setLong("client", id);
+			Query q = session.createQuery("from Order where client_id = :client").setLong("client", id);
 			ords = (List<Order>)q.list();
 			session.getTransaction().commit();
 		}  catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getOrderByClient'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getOrderByClient'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -102,7 +102,7 @@ public class OrderDAOImpl extends GenericDAOImpl<Order> implements OrderDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Order ord where ord.status = :st").setInteger("st", id);
+			Query q = session.createQuery("from Order where status = :st").setInteger("st", id);
 			ords = (List<Order>)q.list();
 			session.getTransaction().commit();
 		}  catch (Exception e) {

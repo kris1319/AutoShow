@@ -7,7 +7,7 @@ public class Manufacturer {
 	private Integer id;
 	private String name;
 	private Integer country_id;
-	private Set labels = new HashSet();
+	private Set<Label> labels = new HashSet<Label>();
 	
 	public Manufacturer() {}
 	
@@ -41,11 +41,11 @@ public class Manufacturer {
 		return country_id;
 	}
 	
-	public void setLabels(Set new_lab) {
+	public void setLabels(Set<Label> new_lab) {
 		this.labels = new_lab;
 	}
 	
-	public Set getLabels() {
+	public Set<Label> getLabels() {
 		return labels;
 	}
 }

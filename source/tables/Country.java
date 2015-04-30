@@ -6,8 +6,8 @@ import java.util.HashSet;
 public class Country {
 	private Integer id;
 	private String country;
-	private Set cities = new HashSet();
-	private Set manufacturers = new HashSet();
+	private Set<City> cities = new HashSet<City>();
+	private Set<Manufacturer> manufacturers = new HashSet<Manufacturer>();
 	
 	public Country() {}
 	
@@ -44,7 +44,7 @@ public class Country {
 		this.manufacturers = new_man;
 	}
 	
-	public Set getManufacturers() {
+	public Set<Manufacturer> getManufacturers() {
 		return manufacturers;
 	}
 }

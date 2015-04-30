@@ -26,7 +26,7 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 			session = HibernateUtil.getSessionFactory().openSession();
 			car = (Car)session.load(Car.class, num);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with getting car by reg num", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with getting car by reg num", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -45,19 +45,19 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 			
 			Query q;
 			if (lc == null && rc == null)
-				q = session.createQuery("select c" + " from Car c");
+				q = session.createQuery("from Car");
 			else if (lc == null)
-				q = session.createQuery("select c" + " from Car c" + " where c.cost <= :rcost").setBigDecimal("rcost", rc);
+				q = session.createQuery("from Car" + " where cost <= :rcost").setBigDecimal("rcost", rc);
 			else if (rc == null)
-				q = session.createQuery("select c" + " from Car c" + " where c.cost >= :lcost").setBigDecimal("lcost", lc);
+				q = session.createQuery("from Car" + " where cost >= :lcost").setBigDecimal("lcost", lc);
 			else 
-				q = session.createQuery("select c" + " from Car c"
-						+ " where c.cost <= :rcost and c.cost >= :lcost").setBigDecimal("lcost", lc).setBigDecimal("rcost", rc);
+				q = session.createQuery("from Car c"
+						+ " where cost <= :rcost and cost >= :lcost").setBigDecimal("lcost", lc).setBigDecimal("rcost", rc);
 			
 			cars = (List<Car>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCarsByCost'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCarsByCost'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -73,12 +73,11 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("select c" + " from Car c"
-						+ " where c.mileage <= :rmil").setDouble("rmil", rm);
+			Query q = session.createQuery("from Car where mileage <= :rmil").setDouble("rmil", rm);
 			cars = (List<Car>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCarsByMileage'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCarsByMileage'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -114,8 +113,7 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("select c" + " from Car c"
-						+ " where c.colour_id = :col").setInteger("col", cid);
+			Query q = session.createQuery("from Car c where colour_id = :col").setInteger("col", cid);
 			cars = (List<Car>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -136,8 +134,7 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("select c" + " from Car c"
-						+ " where c.upholstery = :uph").setInteger("uph", mid);
+			Query q = session.createQuery("from Car where upholstery = :uph").setInteger("uph", mid);
 			cars = (List<Car>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -158,8 +155,7 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("select c" + " from Car c"
-						+ " where c.label_id = :l").setInteger("l", lid);
+			Query q = session.createQuery("from Car where label_id = :l").setInteger("l", lid);
 			cars = (List<Car>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -176,13 +172,11 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 	public Car getCarByOrder(Order ord) throws SQLException {
 		Session session = null;
 		Car car = null;
-		Long num = ord.getNumber();
+		Long num = ord.getCarId();
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Car.*" + " from Car INNER JOIN Order on Car.reg_number = Order.car_id"
-						+ " where Order.number = :ord").setLong("ord", num);
-			car = (Car)q.uniqueResult();
+			car = (Car)session.load(Car.class, num);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCarsByOrder'", JOptionPane.OK_OPTION);
@@ -198,13 +192,11 @@ public class CarDAOImpl extends GenericDAOImpl<Car> implements CarDAO {
 	public Car getCarByTestDrive(TestDrive td) throws SQLException {
 		Session session = null;
 		Car car = null;
-		Long num = td.getNumber();
+		Long num = td.getCarId();
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Car.*" + " from Car INNER JOIN TestDrive on Car.reg_number = TestDrive.car_id"
-						+ " where TestDrive.number = :td").setLong("td", num);
-			car = (Car)q.uniqueResult();
+			car = (Car)session.load(Car.class, num);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCarsByTestDrive'", JOptionPane.OK_OPTION);

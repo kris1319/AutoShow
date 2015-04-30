@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Status {
 	private Integer id;
 	private String status;
-	private Set orders = new HashSet();
+	private Set<Order> orders = new HashSet<Order>();
 	
 	public Status() {}
 	
@@ -31,11 +31,11 @@ public class Status {
 		return status;
 	}
 	
-	public void setOrders(Set new_ord) {
+	public void setOrders(Set<Order> new_ord) {
 		this.orders = new_ord;
 	}
 	
-	public Set getOrders() {
+	public Set<Order> getOrders() {
 		return orders;
 	}
 }

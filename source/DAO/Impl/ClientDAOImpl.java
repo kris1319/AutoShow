@@ -39,7 +39,7 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 			session = HibernateUtil.getSessionFactory().openSession();
 			client = (Client)session.load(Client.class, id);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientById'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientById'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -58,10 +58,10 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 			
 			Query q = null;
 			if (fn != null)
-				q = session.createQuery("from Client cl where cl.first_name = :fname").setString("fname", fn);
+				q = session.createQuery("from Client where first_name = :fname").setString("fname", fn);
 			else
 				q = session.createQuery("from Client");
-			
+			session.getTransaction().commit();
 			clients = (List<Client>)q.list();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByFName'", JOptionPane.OK_OPTION);
@@ -83,11 +83,12 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 			
 			Query q = null;
 			if (ln != null)
-				q = session.createQuery("from Client cl where cl.last_name = :lname").setString("lname", ln);
+				q = session.createQuery("from Client where last_name = :lname").setString("lname", ln);
 			else
 				q = session.createQuery("from Client");
 			
 			clients = (List<Client>)q.list();
+			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByLName'", JOptionPane.OK_OPTION);
 	    } finally {
@@ -106,8 +107,9 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Client cl where cl.location = :city").setInteger("city", cid);
+			Query q = session.createQuery("from Client where location = :city").setInteger("city", cid);
 			clients = (List<Client>)q.list();
+			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByLocation'", JOptionPane.OK_OPTION);
 	    } finally {
@@ -127,8 +129,9 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Client cl where cl.phone = :ph").setString("ph", ph);
+			Query q = session.createQuery("from Client where phone = :ph").setString("ph", ph);
 			client = (Client)q.uniqueResult();
+			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByPhone'", JOptionPane.OK_OPTION);
 	    } finally {
@@ -148,8 +151,9 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Client cl where cl.email = :email").setString("email", em);
+			Query q = session.createQuery("from Client where email = :email").setString("email", em);
 			client = (Client)q.uniqueResult();
+			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByMail'", JOptionPane.OK_OPTION);
 	    } finally {
@@ -163,17 +167,15 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 	
 	public Client getClientByOrder(Order ord) throws SQLException {
 		Session session = null;
-		Long num = ord.getNumber();
+		Long num = ord.getClientId();
 		Client client = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Client.*"
-						+ " from Client INNER JOIN Order on Client.id = Order.client_id"
-						+ " where Order.number = :num").setLong("num", num);
-			client = (Client)q.uniqueResult();
+			client = (Client)session.load(Client.class, num);
+			session.getTransaction().commit();
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByOrder'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByOrder'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -185,17 +187,15 @@ public class ClientDAOImpl extends GenericDAOImpl<Client> implements ClientDAO {
 	
 	public Client getClientByTestDrive(TestDrive td) throws SQLException {
 		Session session = null;
-		Long num = td.getNumber();
+		Long num = td.getClientId();
 		Client client = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Client.*"
-						+ " from Client INNER JOIN TestDrive on Client.id = TestDrive.client_id"
-						+ " where TestDrive.number = :num").setLong("num", num);
-			client = (Client)q.uniqueResult();
+			client = (Client)session.load(Client.class, num);
+			session.getTransaction().commit();
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByOrder'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getClientByOrder'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();

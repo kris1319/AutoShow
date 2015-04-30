@@ -7,7 +7,7 @@ public class Label {
 	private Integer id;
 	private String name;
 	private Integer facture_id;
-	private Set cars = new HashSet();
+	private Set<Car> cars = new HashSet<Car>();
 	
 	public Label() {}
 	
@@ -41,11 +41,11 @@ public class Label {
 		return facture_id;
 	}
 	
-	public void setCars(Set new_car) {
+	public void setCars(Set<Car> new_car) {
 		this.cars = new_car;
 	}
 	
-	public Set getCars() {
+	public Set<Car> getCars() {
 		return cars;
 	}
 }

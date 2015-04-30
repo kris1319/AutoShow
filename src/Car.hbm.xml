@@ -2,12 +2,25 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
 		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 		
-<hibernate-mapping>	
+<hibernate-mapping auto-import="true" default-lazy="false">	
 	<class name="logic.Car" table="Cars">
 		<id column="registration_number" name="regNumber" type="java.lang.Long">
 			<generator class="increment"/>
 		</id>
+		
 		<property column="cost" name="cost" type="java.math.BigDecimal"/>
 		<property column="model" name="model" type="java.lang.String"/>
+		<property column="label_id" name="labelId" type="java.lang.Integer"/>
+		<property column="colour_id" name="colourId" type="java.lang.Integer"/>
+		<property column="upholstery_id" name="upholstery" type="java.lang.Integer"/>
+		
+		<set name="orders" lazy="false">
+			<key column="car_id"/>
+			<one-to-many class="logic.Order"/>
+		</set>
+		<set name="testdrives" lazy="false">
+			<key column="car_id"/>
+			<one-to-many class="logic.TestDrive"/>
+		</set>
 	</class>
 </hibernate-mapping>

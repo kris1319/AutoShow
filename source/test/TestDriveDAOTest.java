@@ -1,9 +1,11 @@
 package test;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 import org.hibernate.HibernateException;
 import org.testng.Assert;
@@ -24,18 +26,24 @@ public class TestDriveDAOTest extends Assert {
 	@DataProvider
 	public Object[][] TestDriveData() {
 		return new Object[][] {
-				{ 1, 1, "21/12/2014 12:30:00.350", "x", true },
-				{ null, 1, "21/12/2014 12:30:00.350", "x", false },
-				{ 1, null, "21/12/2014 12:30:00.350", "x", false },
-				{ 1, 1, null, "x", false },
-				{ 1, 1, "21/12/2014 12:30:00.350", null, true },
-				{ null, null, null, null, null, false }
+				{ (long)1, (long)1, "21.12.2014 12:30:00", "x", true },
+				{ null, (long)1, "21.12.2014 12:30:00", "x", false },
+				{ (long)1, null, "21.12.2014 12:30:00", "x", false },
+				{ (long)1, (long)1, null, "x", false },
+				{ (long)1, (long)1, "21.12.2014 12:30:00", null, true },
+				{ null, null, null, null, false }
 		};
 	}
 	
 	@Test(dataProvider="TestDriveData")
-	public void DataTest(Long c, Long l, SimpleDateFormat d, String s, boolean expect) {
+	public void DataTest(Long c, Long l, String sd, String s, boolean expect) {
 		try {
+			String fdate = "dd.MM.yyyy HH:mm:ss";
+			SimpleDateFormat ff = new SimpleDateFormat(fdate);
+			Date d = null;
+			if (sd != null)
+				d = ff.parse(sd);
+			
 			Integer count = tD.getAll().size();
 			TestDrive obj = new TestDrive(count.longValue() + 1, c, l, d, s);
 
@@ -67,6 +75,9 @@ public class TestDriveDAOTest extends Assert {
 			assertEquals(tD.getAll().size(), count.intValue());
 			assertTrue(expect);
 		} catch (HibernateException ex) {
+			assertFalse(expect);
+		} catch (ParseException ex) {
+			System.out.print(ex);
 			assertFalse(expect);
 		} catch (SQLException ex) {
 			assertFalse(expect);

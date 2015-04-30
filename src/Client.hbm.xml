@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
 		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 		
-<hibernate-mapping>	
+<hibernate-mapping auto-import="true" default-lazy="false">	
 	<class name="logic.Client" table="Client">
 		<id column="client_id" name="id" type="java.lang.Long">
 			<generator class="increment"/>
@@ -12,5 +12,15 @@
 		<property column="address" name="address" type="java.lang.String"/>
 		<property column="email" name="email" type="java.lang.String"/>
 		<property column="phone_number" name="phone" type="java.lang.String"/>
+		<property column="location" name="location" type="java.lang.Integer"/>
+		
+		<set name="orders" lazy="false">
+			<key column="client_id"/>
+			<one-to-many class="logic.Order"/>
+		</set>
+		<set name="testdrives" lazy="false">
+			<key column="client_id"/>
+			<one-to-many class="logic.TestDrive"/>
+		</set>
 	</class>
 </hibernate-mapping>

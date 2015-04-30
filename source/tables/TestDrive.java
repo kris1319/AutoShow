@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Set;
 import java.util.HashSet;
@@ -8,12 +9,12 @@ public class TestDrive {
 	private Long number;
 	private Long car_id;
 	private Long client_id;
-	private SimpleDateFormat date;
+	private Date date;
 	private String feedback;
 	
 	public TestDrive() {}
 	
-	public TestDrive(Long n, Long c, Long l, SimpleDateFormat d, String f) {
+	public TestDrive(Long n, Long c, Long l, Date d, String f) {
 		this.number = n;
 		this.car_id = c;
 		this.client_id = l;
@@ -45,11 +46,11 @@ public class TestDrive {
 		return client_id;
 	}
 	
-	public void setDate(SimpleDateFormat new_date) {
+	public void setDate(Date new_date) {
 		this.date = new_date;
 	}
 	
-	public SimpleDateFormat getDate() {
+	public Date getDate() {
 		return date;
 	}
 	

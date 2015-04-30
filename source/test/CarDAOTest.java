@@ -26,23 +26,26 @@ public class CarDAOTest extends Assert {
 	@DataProvider
 	public Object[][] CarData() {
 		return new Object[][] {
-				{ 1, "x", 100, 1, 1, true },
-				{ null, "x", 100, 1, 1, false },
-				{ 1, null, 100, 1, 1, false },
-				{ 1, "x", 100, null, 1, false },
-				{ 1, "x", 100, 1, null, false },
-				{ 1000, "x", 100, 1, 1, false },
-				{ 1, 1000, 100, 1, 1, false },
-				{ 1, "x", 100, 1000, 1, false },
-				{ 1, "x", 100, 1, 1000, false },
+				{ 1, "x", "100.0000", 1, 1, true },
+				{ null, "x", "100.0000", 1, 1, false },
+				{ 1, null, "100.0000", 1, 1, false },
+				{ 1, "x", "100.0000", null, 1, false },
+				{ 1, "x", "100.0000", 1, null, false },
+				{ 1000, "x", "100.0000", 1, 1, false },
+				{ 1, "x", "100.0000", 1000, 1, false },
+				{ 1, "x", "100.0000", 1, 1000, false },
 				{ 1, "x", null, 1, 1, true },
 				{ null, null, null, null, null, false }
 		};
 	}
 	
 	@Test(dataProvider="CarData")
-	public void DataTest(Integer l, String m, BigDecimal c, Integer col, Integer u, boolean expect) {
+	public void DataTest(Integer l, String m, String sc, Integer col, Integer u, boolean expect) {
 		try {
+			BigDecimal c = null;
+			if (sc != null)
+				c = new BigDecimal(sc);
+			
 			Integer count = tD.getAll().size();
 			Car obj = new Car(count.longValue() + 1, l, m, c, col, u);
 
@@ -57,7 +60,8 @@ public class CarDAOTest extends Assert {
 			assertEquals(temp.getLabelId(), obj.getLabelId());
 
 			obj.setLabelId(2);
-			obj.setCost(BigDecimal.valueOf(2));
+			c = new BigDecimal("2.0000");
+			obj.setCost(c);
 			obj.setModel("xxx");
 			obj.setColourId(2);
 			obj.setUpholstery(2);
@@ -156,16 +160,22 @@ public class CarDAOTest extends Assert {
 	@DataProvider
 	public Object[][] CarCost() {
 		return new Object[][] {
-				{ 1, 100000000, true },
-				{ null, 100000000, true },
-				{ 1, null, true },
-				{ null, null, true }
+				{ "100000.0000", "300000.0000" },
+				{ null, "300000.0000" },
+				{ "100000.0000", null },
+				{ null, null }
 		};
 	}
 	
 	@Test(dataProvider="CarCost")
-	public void getByCost(BigDecimal l, BigDecimal r) {
+	public void getByCost(String sl, String sr) {
 		try {
+			BigDecimal l = null, r = null;
+			if (sl != null)
+				l = new BigDecimal(sl);
+			if (sr != null)
+				r = new BigDecimal(sr);
+			
 			Collection<Car> cs = tD.getCarsByCost(l, r);
 			assertNotNull(cs);
 			assertTrue(cs.size() != 0 && tD.getAll().size() != 0);
@@ -174,8 +184,9 @@ public class CarDAOTest extends Assert {
 				if (l != null)
 					assertTrue(i.getCost().compareTo(l) == 1);
 				if (r != null)
-					assertTrue(i.getCost().compareTo(r) != -1);
+					assertTrue(i.getCost().compareTo(r) == -1);
 			}
+			System.out.print("\n");
 		} catch (SQLException ex) {
 			assertFalse(true);
 		}
@@ -190,7 +201,7 @@ public class CarDAOTest extends Assert {
 				for (Order i : ords) {
 					Car temp = tD.getCarByOrder(i);
 					assertNotNull(temp);
-					Collection<Order> os = temp.getClientsOrders();
+					Collection<Order> os = temp.getOrders();
 					assertNotNull(os);
 					assertTrue(os.size() != 0);
 					
@@ -208,7 +219,7 @@ public class CarDAOTest extends Assert {
 				Collection<Car> cs = tD.getAll();
 				assertNotNull(cs);
 				for (Car i : cs) {
-					assertFalse(i.getClientsOrders().size() != 0);
+					assertFalse(i.getOrders().size() != 0);
 				}
 			}
 		} catch (SQLException ex) {
@@ -225,7 +236,7 @@ public class CarDAOTest extends Assert {
 				for (TestDrive i : tds) {
 					Car temp = tD.getCarByTestDrive(i);
 					assertNotNull(temp);
-					Collection<TestDrive> os = temp.getClientsTestDrives();
+					Collection<TestDrive> os = temp.getTestdrives();
 					assertNotNull(os);
 					assertTrue(os.size() != 0);
 					
@@ -243,7 +254,7 @@ public class CarDAOTest extends Assert {
 				Collection<Car> cs = tD.getAll();
 				assertNotNull(cs);
 				for (Car i : cs) {
-					assertFalse(i.getClientsTestDrives().size() != 0);
+					assertFalse(i.getTestdrives().size() != 0);
 				}
 			}
 		} catch (SQLException ex) {

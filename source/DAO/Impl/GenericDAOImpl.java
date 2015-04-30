@@ -69,9 +69,10 @@ public class GenericDAOImpl <T> implements GenericDAO <T> {
 		Session session = null;
 		Collection<T> result = null;
 		try {
+		//	System.out.print(type.getName());
+		//	System.out.print("\n");
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			System.out.print(type.getName());
 			result =  (Collection<T>) session.createCriteria(type).list();
 			session.getTransaction().commit();
 		} catch (HibernateException ex) {

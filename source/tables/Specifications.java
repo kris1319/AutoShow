@@ -4,27 +4,26 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class Specifications {
-	private Long car_id;
+	private Long carId;
 	private Integer engine_power;
 	private Double fuel_consumption;
 	private Boolean auto_transmission;
-	private Car car;
 	
 	public Specifications() {}
 	
 	public Specifications(Long i, Integer e, Double f, Boolean a) {
-		this.car_id = i;
+		this.carId = i;
 		this.engine_power = e;
 		this.fuel_consumption = f;
 		this.auto_transmission = a;
 	}
 	
 	public void setCarId(Long new_car) {
-		this.car_id = new_car; 
+		this.carId = new_car; 
 	}
 	
 	public Long getCarId() {
-		return car_id;
+		return carId;
 	}
 	
 	public void setEnginePower(Integer new_pow) {
@@ -49,14 +48,6 @@ public class Specifications {
 	
 	public Boolean getAutoTransmission() {
 		return auto_transmission;
-	}
-	
-	public void setCars(Car new_car) {
-		this.car = new_car;
-	}
-	
-	public Car getCars() {
-		return car;
 	}
 }
 

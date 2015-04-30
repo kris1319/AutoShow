@@ -25,7 +25,7 @@ public class TestDriveDAOImpl extends GenericDAOImpl<TestDrive> implements TestD
 			session = HibernateUtil.getSessionFactory().openSession();
 			td = (TestDrive)session.load(TestDrive.class, num);
 		}  catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getTestDriveByNumber'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getTestDriveByNumber'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -42,11 +42,11 @@ public class TestDriveDAOImpl extends GenericDAOImpl<TestDrive> implements TestD
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from TestDrive td where td.car_id = :car").setLong("car", num);
+			Query q = session.createQuery("from TestDrive where car_id = :car").setLong("car", num);
 			tds = (List<TestDrive>)q.list();
 			session.getTransaction().commit();
 		}  catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getTestDriveByCar'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getTestDriveByCar'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -63,11 +63,11 @@ public class TestDriveDAOImpl extends GenericDAOImpl<TestDrive> implements TestD
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from TestDrive td where td.client_id = :client").setLong("client", id);
+			Query q = session.createQuery("from TestDrive where client_id = :client").setLong("client", id);
 			tds = (List<TestDrive>)q.list();
 			session.getTransaction().commit();
 		}  catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getTestDriveByClient'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getTestDriveByClient'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();

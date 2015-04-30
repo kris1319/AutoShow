@@ -39,7 +39,7 @@ public class ManufacturerDAOImpl extends GenericDAOImpl<Manufacturer> implements
 			session = HibernateUtil.getSessionFactory().openSession();
 			man = (Manufacturer)session.load(Manufacturer.class, id);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getManufacturerById'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getManufacturerById'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -55,7 +55,7 @@ public class ManufacturerDAOImpl extends GenericDAOImpl<Manufacturer> implements
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Manufacturer m where m.name = :nf").setString("nf", nf);
+			Query q = session.createQuery("from Manufacturer where name = :nf").setString("nf", nf);
 			man = (Manufacturer)q.uniqueResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class ManufacturerDAOImpl extends GenericDAOImpl<Manufacturer> implements
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Manufacturer m where m.country_id = :id").setInteger("id", cid);
+			Query q = session.createQuery("from Manufacturer where country_id = :id").setInteger("id", cid);
 			mans = (List<Manufacturer>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -92,15 +92,12 @@ public class ManufacturerDAOImpl extends GenericDAOImpl<Manufacturer> implements
 	
 	public Manufacturer getManufactByLabel(Label l) throws SQLException {
 		Session session = null;
-		Integer lid = l.getId();
+		Integer lid = l.getFactureId();
 		Manufacturer man = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Manufacturer.*" 
-						+ " from Manufacturer INNER JOIN Label on Manufacturer.id = Label.facture_id" 
-						+ " where Label.id = :lid").setInteger("lid", lid);
-			man = (Manufacturer)q.uniqueResult();
+			man = (Manufacturer)session.load(Manufacturer.class, lid);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getManufacturerByLabel'", JOptionPane.OK_OPTION);

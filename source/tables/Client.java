@@ -11,8 +11,8 @@ public class Client {
 	private String address;
 	private String email;
 	private String phone;
-	private Set cars_orders = new HashSet();
-	private Set cars_testdrives = new HashSet(); 
+	private Set<Order> orders = new HashSet<Order>();
+	private Set<TestDrive> testdrives = new HashSet<TestDrive>(); 
 	
 	public Client() {}
 	
@@ -82,20 +82,20 @@ public class Client {
 		return phone;
 	}
 	
-	public void setCarsOrders(Set new_ord) {
-		this.cars_orders = new_ord;
+	public void setOrders(Set new_ord) {
+		this.orders = new_ord;
 	}
 	
-	public Set getCarsOrders() {
-		return cars_orders;
+	public Set getOrders() {
+		return orders;
 	}
 	
-	public void setCarsTestDrives(Set new_td) {
-		this.cars_testdrives = new_td;
+	public void setTestdrives(Set new_td) {
+		this.testdrives = new_td;
 	}
 	
-	public Set getCarsTestDrives() {
-		return cars_testdrives;
+	public Set getTestdrives() {
+		return testdrives;
 	}
 }
 

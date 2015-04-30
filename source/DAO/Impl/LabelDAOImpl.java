@@ -39,7 +39,7 @@ public class LabelDAOImpl extends GenericDAOImpl<Label> implements LabelDAO {
 			session = HibernateUtil.getSessionFactory().openSession();
 			label = (Label)session.load(Label.class, id);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getLabelById'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getLabelById'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -55,7 +55,7 @@ public class LabelDAOImpl extends GenericDAOImpl<Label> implements LabelDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Label l where l.name = :nl").setString("nl", nl);
+			Query q = session.createQuery("from Label where name = :nl").setString("nl", nl);
 			label = (Label)q.uniqueResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -76,9 +76,7 @@ public class LabelDAOImpl extends GenericDAOImpl<Label> implements LabelDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Label.*" 
-						+ " from Label INNER JOIN Manufacturer on Label.facture_id = Manufacturer.id" 
-						+ " where Manufacturer.id = :man_id").setInteger("man_id", mid);
+			Query q = session.createQuery("from Label where facture_id = :man").setInteger("man", mid);
 			labels = (List<Label>)q.list();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -94,14 +92,12 @@ public class LabelDAOImpl extends GenericDAOImpl<Label> implements LabelDAO {
 	
 	public Label getLabelByCar(Car c) throws SQLException {
 		Session session = null;
-		Long num = c.getRegNumber();
+		Integer num = c.getLabelId();
 		Label label = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Label.*" 
-						+ " from Label INNER JOIN Car on Car.label_id = Label.id" 
-						+ " where Car.reg_number = :num").setLong("num", num);
+			Query q = session.createQuery("from Label where label_id = :num").setInteger("num", num);
 			label = (Label)q.uniqueResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {

@@ -30,7 +30,7 @@ public class ColourDAOTest extends Assert {
 	public void DataTest(String str, boolean expect) {
 		try {
 			Integer count = cD.getAll().size();
-			/*Colour col = new Colour(count.intValue() + 1, str);
+			Colour col = new Colour(count.intValue() + 1, str);
 			
 			cD.insert(col);
 			Colour temp = cD.getColourById(col.getId());
@@ -50,16 +50,16 @@ public class ColourDAOTest extends Assert {
 			assertNull(temp);
 			
 			assertEquals(cD.getAll().size(), count.intValue());
-			assertTrue(expect);*/
+			assertTrue(expect);
 		} catch (HibernateException ex) {
-			System.out.println(ex.toString());
+			//System.out.println(ex.toString());
 			assertFalse(expect);
-		}// catch (SQLException ex) {
-		//	assertFalse(expect);
-	//	}
+		} catch (SQLException ex) {
+			assertFalse(expect);
+		}
 	}
 
-	/*@DataProvider
+	@DataProvider
 	public Object[][] ColourName() {
 		return new Object[][] {
 				{ "string", true },
@@ -92,6 +92,8 @@ public class ColourDAOTest extends Assert {
 	@Test
 	public void getByCar() {
 		try {
+			//Integer count = carD.getAll().size();
+			//System.out.print(count);
 			Collection<Car> cars = carD.getAll();
 			assertNotNull(cars);
 			if (cars.size() != 0) {
@@ -125,5 +127,5 @@ public class ColourDAOTest extends Assert {
 		} catch (SQLException ex) {
 			assertFalse(true);
 		}
-	}*/
+	}
 }

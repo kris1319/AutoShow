@@ -39,7 +39,7 @@ public class MaterialDAOImpl extends GenericDAOImpl<Material> implements Materia
 			session = HibernateUtil.getSessionFactory().openSession();
 			material = (Material)session.load(Material.class, id);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getMaterialById'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getMaterialById'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -55,7 +55,7 @@ public class MaterialDAOImpl extends GenericDAOImpl<Material> implements Materia
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Material m where m.name = :str").setString("str", str);
+			Query q = session.createQuery("from Material where name = :str").setString("str", str);
 			material = (Material)q.uniqueResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -71,15 +71,12 @@ public class MaterialDAOImpl extends GenericDAOImpl<Material> implements Materia
 	
 	public Material getMaterialByCar(Car c) throws SQLException {
 		Session session = null;
-		Long num = c.getRegNumber();
+		Integer num = c.getUpholstery();
 		Material material = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Material.*" 
-						+ " from Material INNER JOIN Car on Car.upholstery = Material.id" 
-						+ " where Car.reg_number = :num").setLong("num", num);
-			material = (Material)q.uniqueResult();
+			material = (Material)session.load(Material.class, num);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getMaterialByCar'", JOptionPane.OK_OPTION);

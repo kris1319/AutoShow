@@ -139,7 +139,6 @@ public class CityDAOTest extends Assert {
 				for (Country i : cts) {
 					Collection<City> temps = tD.getCitiesByCountry(i);
 					assertNotNull(temps);
-					
 					for (City ii : temps) {
 						assertEquals(i.getId(), ii.getCountryId());						
 					}

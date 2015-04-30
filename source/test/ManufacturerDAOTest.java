@@ -114,7 +114,6 @@ public class ManufacturerDAOTest extends Assert {
 							break;
 						}
 					}
-					
 					assertTrue(f);
 				}
 			} else {

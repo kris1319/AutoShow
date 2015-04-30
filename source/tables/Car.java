@@ -12,9 +12,8 @@ public class Car {
 	private BigDecimal cost;
 	private Integer colour_id;
 	private Integer upholstery;
-	private Specifications specifications;
-	private Set clients_orders = new HashSet();
-	private Set clients_testdrives = new HashSet();
+	private Set<Order> orders = new HashSet<Order>();
+	private Set<TestDrive> testdrives = new HashSet<TestDrive>();
 	
 	public Car() {}
 	
@@ -75,28 +74,20 @@ public class Car {
 		return upholstery;
 	}
 	
-	public void setSpecifications(Specifications new_sp) {
-		this.specifications = new_sp;
+	public void setOrders(Set<Order> new_ord) {
+		this.orders = new_ord;
 	}
 	
-	public Specifications getSpecifications() {
-		return specifications;
+	public Set<Order> getOrders() {
+		return orders;
 	}
 	
-	public void setClientsOrders(Set new_ord) {
-		this.clients_orders = new_ord;
+	public void setTestdrives(Set<TestDrive> new_td) {
+		this.testdrives = new_td;
 	}
 	
-	public Set getClientsOrders() {
-		return clients_orders;
-	}
-	
-	public void setClientsTestDrives(Set new_td) {
-		this.clients_testdrives = new_td;
-	}
-	
-	public Set getClientsTestDrives() {
-		return clients_testdrives;
+	public Set<TestDrive> getTestdrives() {
+		return testdrives;
 	}
 }
 

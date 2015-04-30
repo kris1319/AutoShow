@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 import org.hibernate.HibernateException;
 import org.testng.Assert;
@@ -24,19 +26,25 @@ public class OrderDAOTest extends Assert {
 	@DataProvider
 	public Object[][] OrderData() {
 		return new Object[][] {
-				{ 1, 1, "21/12/2014 12:30:00.350", false, 1, true },
-				{ null, 1, "21/12/2014 12:30:00.350", false, 1, false },
-				{ 1, null, "21/12/2014 12:30:00.350", false, 1, false },
-				{ 1, 1, null, false, 1, false },
-				{ 1, 1, "21/12/2014 12:30:00.350", false, null, false },
-				{ 1, 1, "21/12/2014 12:30:00.350", null, 1, true },
+				{ (long)1, (long)1, "21.12.2014 12:30:00", Boolean.FALSE, 1, true },
+				{ null, (long)1, "21.12.2014 12:30:00", Boolean.FALSE, 1, false },
+				{ (long)1, null, "21.12.2014 12:30:00", Boolean.FALSE, 1, false },
+				{ (long)1, (long)1, null, Boolean.FALSE, 1, false },
+				{ (long)1, (long)1, "21.12.2014 12:30:00", Boolean.FALSE, null, false },
+				{ (long)1, (long)1, "21.12.2014 12:30:00", null, 1, true },
 				{ null, null, null, null, null, false }
 		};
 	}
 	
 	@Test(dataProvider="OrderData")
-	public void DataTest(Long c, Long l, SimpleDateFormat d, Boolean t, Integer s, boolean expect) {
+	public void DataTest(Long c, Long l, String sd, Boolean t, Integer s, boolean expect) {
 		try {
+			String fdate = "dd.MM.yyyy HH:mm:ss";
+			SimpleDateFormat ff = new SimpleDateFormat(fdate);
+			Date d = null;
+			if (sd != null)
+				d = ff.parse(sd);
+			
 			Integer count = tD.getAll().size();
 			Order obj = new Order(count.longValue() + 1, c, l, d, t, s);
 
@@ -47,13 +55,13 @@ public class OrderDAOTest extends Assert {
 			assertEquals(temp.getCarId(), obj.getCarId());
 			assertEquals(temp.getClientId(), obj.getClientId());
 			assertEquals(temp.getDate(), obj.getDate());
-			assertEquals(temp.getTestDrive(), obj.getTestDrive());
+			assertEquals(temp.getTestdrive(), obj.getTestdrive());
 			assertEquals(temp.getStatus(), obj.getStatus());
 			
 			obj.setCarId(Long.valueOf(2));
 			obj.setClientId(Long.valueOf(2));
 			obj.setStatus(2);
-			obj.setTestDrive(true);
+			obj.setTestdrive(true);
 			tD.update(obj);
 			temp = tD.getOrderByNumber(obj.getNumber());
 			assertNotNull(temp);
@@ -61,7 +69,7 @@ public class OrderDAOTest extends Assert {
 			assertEquals(temp.getCarId(), obj.getCarId());
 			assertEquals(temp.getClientId(), obj.getClientId());
 			assertEquals(temp.getDate(), obj.getDate());
-			assertEquals(temp.getTestDrive(), obj.getTestDrive());
+			assertEquals(temp.getTestdrive(), obj.getTestdrive());
 			assertEquals(temp.getStatus(), obj.getStatus());
 			
 			tD.delete(obj);
@@ -71,6 +79,9 @@ public class OrderDAOTest extends Assert {
 			assertEquals(tD.getAll().size(), count.intValue());
 			assertTrue(expect);
 		} catch (HibernateException ex) {
+			assertFalse(expect);
+		} catch (ParseException ex) {
+			System.out.print(ex);
 			assertFalse(expect);
 		} catch (SQLException ex) {
 			assertFalse(expect);

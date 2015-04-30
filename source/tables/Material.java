@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Material {
 	private Integer id;
 	private String material;
-	private Set cars = new HashSet();
+	private Set<Car> cars = new HashSet<Car>();
 	
 	public Material() {}
 	
@@ -31,11 +31,11 @@ public class Material {
 		return material;
 	}
 	
-	public void setCars(Set new_car) {
+	public void setCars(Set<Car> new_car) {
 		this.cars = new_car;
 	}
 	
-	public Set getCars() {
+	public Set<Car> getCars() {
 		return cars;
 	}
 }

@@ -9,13 +9,13 @@ INSERT INTO Country VALUES ('5', 'France');
 INSERT INTO Country VALUES ('6', 'Japan');
 
 /*City*/
-INSERT INTO City VALUES ('1', 'Moscow', '1');
-INSERT INTO City VALUES ('2', 'Saint Petersburg', '1');
-INSERT INTO City VALUES ('3', 'New York', '2');
-INSERT INTO City VALUES ('4', 'London', '3');
-INSERT INTO City VALUES ('5', 'Tokio', '6');
-INSERT INTO City VALUES ('6', 'Berlin', '4');
-INSERT INTO City VALUES ('7', 'Paris', '5');
+INSERT INTO City VALUES ('1', 'Moscow', 1);
+INSERT INTO City VALUES ('2', 'Saint Petersburg', 1);
+INSERT INTO City VALUES ('3', 'New York', 2);
+INSERT INTO City VALUES ('4', 'London', 3);
+INSERT INTO City VALUES ('5', 'Tokio', 6);
+INSERT INTO City VALUES ('6', 'Berlin', 4);
+INSERT INTO City VALUES ('7', 'Paris', 5);
 
 /*Colour*/
 INSERT INTO Colour VALUES ('1', 'blue');
@@ -61,12 +61,6 @@ INSERT INTO Cars VALUES ('1', '3', 'GL-class', '325783', '1', '1');
 INSERT INTO Cars VALUES ('2', '5', 'A8', '354334', '2', '2');
 INSERT INTO Cars VALUES ('3', '1', 'x564', '233255', '3', '1');
 INSERT INTO Cars VALUES ('4', '6', '242', '149309', '4', '3');
-
-/*Specifications*/
-INSERT INTO Specifications VALUES ('1', '230', '5.9', '1');
-INSERT INTO Specifications VALUES ('2', '200', '6.9', '1');
-INSERT INTO Specifications VALUES ('3', '240', '5.3', '1');
-INSERT INTO Specifications VALUES ('4', '170', '6.0', '0');
 
 /*TestDrive*/
 INSERT INTO TestDrive VALUES ('1', '1', '1', '2014-12-21 12:30:00.350', 'cool');

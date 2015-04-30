@@ -21,11 +21,12 @@ public class SpecificationsDAOTest extends Assert {
 	@DataProvider
 	public Object[][] SpecificData() {
 		return new Object[][] {
-				{ 1, 10, 10.5, 0, true },
-				{ 1, null, 10.5, 0, true },
-				{ 1, 10, null, 0, true },
-				{ 1, 10, 10.5, null, true },
-				{ 1000, 10, 10.5, 0, false }
+				{ (long)1, 10, 10.5, Boolean.FALSE, true },
+				{ (long)2, null, 10.5, Boolean.FALSE, true },
+				{ (long)3, 10, null, Boolean.FALSE, true },
+				{ (long)4, 10, 10.5, null, true },
+				{ (long)1000, 10, 10.5, Boolean.FALSE, false },
+				{ null, null, null, null, false }
 		};
 	}
 	

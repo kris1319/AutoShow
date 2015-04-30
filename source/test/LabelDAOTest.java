@@ -125,7 +125,7 @@ public class LabelDAOTest extends Assert {
 			Collection<Car> cars = cD.getAll();
 			assertNotNull(cars);
 			if (cars.size() != 0) {
-				for (Car i : cars) {
+				for (Car i : cars) {					
 					Label temp = tD.getLabelByCar(i);
 					assertNotNull(temp);
 					Collection<Car> cs = temp.getCars();

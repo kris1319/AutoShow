@@ -39,11 +39,10 @@ public class SpecificationsDAOImpl extends GenericDAOImpl<Specifications> implem
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Specifications sp where sp.car_id = :num").setLong("num", num);
-			spec = (Specifications)q.uniqueResult();
+			spec = (Specifications)session.load(Specifications.class, num);
 			session.getTransaction().commit();
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getSpecificByCar'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getSpecificByCar'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();

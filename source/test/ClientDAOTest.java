@@ -169,7 +169,7 @@ public class ClientDAOTest extends Assert {
 	@DataProvider
 	public Object[][] ClientEmail() {
 		return new Object[][] {
-				{ "xx", "y", 1, "blabla street", "email", "phone", true },
+				{ "xx", "y", 1, "blabla street", "ema2345il", "phone", true },
 				{ "xx", "y", 1, "blabla street", null, "phone", true }
 		};
 	}
@@ -208,8 +208,8 @@ public class ClientDAOTest extends Assert {
 	@DataProvider
 	public Object[][] ClientPhone() {
 		return new Object[][] {
-				{ "x", "yy", 1, "blabla street", "email", "phone", true },
-				{ "x", "yy", 1, "blabla street", "email", null, true }
+				{ "xx", "yry", 1, "blabla street", "email", "phone378692", true },
+				{ "xx", "yyy", 1, "blabla street", "email", null, true }
 		};
 	}
 	
@@ -221,7 +221,7 @@ public class ClientDAOTest extends Assert {
 			tD.insert(obj);
 			
 			logic.Client temp = tD.getClientByPhone(ph);
-			if (em == null)
+			if (ph == null)
 				assertNull(temp);
 			else {
 				assertNotNull(temp);
@@ -276,7 +276,7 @@ public class ClientDAOTest extends Assert {
 				for (Order i : ords) {
 					logic.Client temp = tD.getClientByOrder(i);
 					assertNotNull(temp);
-					Collection<Order> os = temp.getCarsOrders();
+					Collection<Order> os = temp.getOrders();
 					assertNotNull(os);
 					assertTrue(os.size() != 0);
 					
@@ -294,7 +294,7 @@ public class ClientDAOTest extends Assert {
 				Collection<logic.Client> cs = tD.getAll();
 				assertNotNull(cs);
 				for (logic.Client i : cs) {
-					assertFalse(i.getCarsOrders().size() != 0);
+					assertFalse(i.getOrders().size() != 0);
 				}
 			}
 		} catch (SQLException ex) {
@@ -311,7 +311,7 @@ public class ClientDAOTest extends Assert {
 				for (TestDrive i : tds) {
 					logic.Client temp = tD.getClientByTestDrive(i);
 					assertNotNull(temp);
-					Collection<TestDrive> os = temp.getCarsTestDrives();
+					Collection<TestDrive> os = temp.getTestdrives();
 					assertNotNull(os);
 					assertTrue(os.size() != 0);
 					
@@ -329,7 +329,7 @@ public class ClientDAOTest extends Assert {
 				Collection<logic.Client> cs = tD.getAll();
 				assertNotNull(cs);
 				for (logic.Client i : cs) {
-					assertFalse(i.getCarsTestDrives().size() != 0);
+					assertFalse(i.getTestdrives().size() != 0);
 				}
 			}
 		} catch (SQLException ex) {

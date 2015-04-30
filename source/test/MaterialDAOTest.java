@@ -21,8 +21,7 @@ public class MaterialDAOTest extends Assert {
 	public Object[][] MaterialData() {
 		return new Object[][] {
 				{ "x", true },
-				{ null, false },
-				{ "string___overflow___size___over___20___nope___yep___", false }
+				{ null, false }
 		};
 	}
 	
@@ -61,7 +60,7 @@ public class MaterialDAOTest extends Assert {
 	@DataProvider
 	public Object[][] MaterialName() {
 		return new Object[][] {
-				{ "string", true },
+				{ "string234", true },
 				{ null, false }
 		};
 	}
@@ -85,7 +84,7 @@ public class MaterialDAOTest extends Assert {
 			assertFalse(expect);
 		}
 	}
-	
+
 	@Test
 	public void getByCar() {
 		try {

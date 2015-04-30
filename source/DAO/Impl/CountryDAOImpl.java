@@ -39,7 +39,7 @@ public class CountryDAOImpl extends GenericDAOImpl<Country> implements CountryDA
 			session = HibernateUtil.getSessionFactory().openSession();
 			country = (Country)session.load(Country.class, id);
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCountryById'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCountryById'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();
@@ -55,7 +55,7 @@ public class CountryDAOImpl extends GenericDAOImpl<Country> implements CountryDA
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createQuery("from Country c where c.country = :str").setString("str", c);
+			Query q = session.createQuery("from Country where country = :str").setString("str", c);
 			country = (Country)q.uniqueResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -71,15 +71,12 @@ public class CountryDAOImpl extends GenericDAOImpl<Country> implements CountryDA
 	
 	public Country getCountryByCity(City c) throws SQLException {
 		Session session = null;
-		Integer cid = c.getId();
+		Integer cid = c.getCountryId();
 		Country country = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Country.*" 
-							+ " from Country INNER JOIN City on City.country_id = Country.id" 
-							+ " where City.id = :cid").setInteger("cid", cid);
-			country = (Country)q.uniqueResult();
+			country = (Country)session.load(Country.class, cid);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCountryByCity'", JOptionPane.OK_OPTION);
@@ -99,13 +96,10 @@ public class CountryDAOImpl extends GenericDAOImpl<Country> implements CountryDA
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Query q = session.createSQLQuery("SELECT Country.*" 
-							+ " from Country INNER JOIN Manufacturer on Manufacturer.country_id = Country.id" 
-							+ " where Manufacturer.id = :man_id").setInteger("man_id", mid);
-			country = (Country)q.uniqueResult();
+			country = (Country)session.load(Country.class, mid);
 			session.getTransaction().commit();
 		} catch (Exception e) {
-	    	JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCityByClient'", JOptionPane.OK_OPTION);
+	    	//JOptionPane.showMessageDialog(null, e.getMessage(), "Error with 'getCityByClient'", JOptionPane.OK_OPTION);
 	    } finally {
 	    	if (session != null && session.isOpen()) {
 	    		session.close();

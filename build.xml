@@ -7,37 +7,27 @@
 	<property name="sql.jdbcURL" value="jdbc:mysql://localhost:3306/?characterEncoding=UTF-8" />
 	<property name="sql.jdbcPath" value="WebContent/WEB-INF/lib/mysql-connector-java-5.1.34.jar" />
 	<property name="sql.jdbcDriver" value="com.mysql.jdbc.Driver" />
-	
-	
-	<target name="setupMYSQL" description="Set up MYSQL database properties">
 		
-		<sql driver="${sql.jdbcDriver}" url="${sql.jdbcURL}" userid="client" password="1234">
-			
+	<target name="DropTables" description="Dropping MSSQL database's tables">			
+		<sql driver="${sql.jdbcDriver}" url="${sql.jdbcURL}" userid="client" password="1234">			
 			<classpath>
 				<pathelement path="${sql.jdbcPath}" />
 			</classpath>
 			
-			<transaction src="${sql.scriptPath}\CreateDB.sql" />
-			<transaction src="${sql.scriptPath}\DataBase.sql" />
-			<transaction src="${sql.scriptPath}\Insertion.sql" />
-			
-		</sql>
-		
+			<transaction src="${sql.scriptPath}\Drops.sql" />			
+		</sql>			
 	</target>
 	
-	
-	<target name="DropTables" description="Dropping MSSQL database's tables">
-			
-		<sql driver="${sql.jdbcDriver}" url="${sql.jdbcURL}" userid="client" password="1234">
-			
-			<classpath>
-				<pathelement path="${sql.jdbcPath}" />
-			</classpath>
-			
-			<transaction src="${sql.scriptPath}\Drops.sql" />
-			
-		</sql>
-			
+	<target name="setupMYSQL" description="Set up MYSQL database properties" depends="DropTables">			
+			<sql driver="${sql.jdbcDriver}" url="${sql.jdbcURL}" userid="client" password="1234">				
+				<classpath>
+					<pathelement path="${sql.jdbcPath}" />
+				</classpath>
+				
+				<transaction src="${sql.scriptPath}\CreateDB.sql" />
+				<transaction src="${sql.scriptPath}\DataBase.sql" />
+				<transaction src="${sql.scriptPath}\Insertion.sql" />				
+			</sql>			
 	</target>
 	
 	<property name="project.class.dir" value="./classes"/>
@@ -92,6 +82,28 @@
 		</testng>
 	</target>
 
+	<property name="war.dir" value="WebContent"/>
+	<property name="dist.dir" value="dist"/>
+	<property name="appserver.home" value="C:/glassfish4/glassfish" />
+	<property name="appserver.lib" value="${appserver.home}/lib" />
+	<property name="deploy.path" value="${appserver.home}/domains/domain1/autodeploy" />
+	
+	
+	<target name="warfile" depends="build" description="Build the web application archive">
+		<mkdir dir="${dist.dir}"/>
+
+		<war warfile="${dist.dir}/AutoShow.war" basedir="${war.dir}" webxml="${war.dir}/WEB-INF/web.xml">
+			<include name="**/*.*"/>
+		</war>
+	</target>
+
+	<target name="deploywar" depends="warfile" description="Deploy application as a WAR file">
+		<copy todir="${deploy.path}" preservelastmodified="true">
+			<fileset dir="${dist.dir}">
+				<include name="*.war"/>
+			</fileset>
+		</copy>
+	</target>
 	
 	<target name="all" depends="setupMYSQL" description="DataBase"/>
 

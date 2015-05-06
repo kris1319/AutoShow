@@ -1,0 +1,59 @@
+body {
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:active {
+    color: #80CFD8;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th {
+    background: #bfd0ba; 
+    color: #333;
+}
+   
+tr:hover {
+    background: #bfd0ba;
+    color: #fff;
+}
+
+.mybuttonl {
+    float: left;
+    padding: 8px;
+    width: 100px;
+    height: 27px;
+    border: solid 2px #008080;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    color: black;
+}
+
+.mybuttonr {
+    float: left;
+    padding: 8px;
+    width: 100px;
+    height: 27px;
+    border: solid 2px #008080;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    color: black;
+}
+
+.mybuttonl:hover {
+    background: #80CFD8;
+    color: #fff;
+}
+
+.mybuttonr:hover {
+    background: #80CFD8;
+    color: #fff;
+}

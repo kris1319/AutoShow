@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/?characterEncoding=UTF-8</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.username">client</property>
+    <property name="connection.password">1234</property>
+    <property name="show_sql">false</property>
+    <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+	<mapping resource="logic/Colour.hbm.xml"/>
+	<mapping resource="logic/Material.hbm.xml"/>
+	<mapping resource="logic/Status.hbm.xml"/>
+	<mapping resource="logic/Country.hbm.xml"/>
+    <mapping resource="logic/City.hbm.xml"/>
+	<mapping resource="logic/Manufacturer.hbm.xml"/>
+    <mapping resource="logic/Label.hbm.xml"/>
+    <mapping resource="logic/Client.hbm.xml"/>
+    <mapping resource="logic/Car.hbm.xml"/>
+    <mapping resource="logic/Specifications.hbm.xml"/>
+    <mapping resource="logic/TestDrive.hbm.xml"/>
+    <mapping resource="logic/Order.hbm.xml"/>
+
+  </session-factory>
+  
+</hibernate-configuration>

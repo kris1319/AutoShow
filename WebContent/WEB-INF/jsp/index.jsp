@@ -5,13 +5,13 @@
 
 <title>Главная страница</title>
 
-<a href="cars"> 
+<a href="cars.html"> 
 	<div class="mybuttonl">
 	Автомобили
 	</div>
 </a>
 
-<a href="clients"> 
+<a href="clients.html"> 
 	<div class="mybuttonr">
 	Клиенты
 	</div>
@@ -25,16 +25,26 @@
 	<th>Дата</th>
 	<th>Тест-драйв</th>
 	<th>Статус</th>
+	<th></th>
 </tr>
 
 <c:forEach items="${orders}" var="order">
 	<tr>
 		<td>${order.number}</td>
-		<td><a href="car?id=${car.reg_number}"> №${order.car_id}</a></td>
-		<td><a href="client?id=${order.client_id}"> №${order.client}</a></td>
+		<td>${order.carId}</td>
+		<td><a href="client.html?id=${order.clientId}">${order.client}</a></td>
 	  	<td>${order.date}</td>
-	  	<td>${order.testrive}</td>
+	  	<td>${order.testdrive}</td>
 	  	<td>${order.status}</td>
+	  	<td>
+		  	<form:form modelAttribute="OrderStatus" method="POST" action="test?id=order.number">
+		  		<form:select path="id">
+					<c:forEach items="${statuses}" var="st">
+						<option value="${st.id}">${st.status}</option>
+					</c:forEach>
+				</form:select>
+			</form:form>
+	  	</td>
 	</tr>
 </c:forEach>
 </table>
